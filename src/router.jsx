@@ -8,34 +8,38 @@ import About from "./Pages/About";
 import Services from "./Pages/Services";
 import Contact from "./Pages/Contact";
 import Register from "./Pages/Register/Register";
+import Login from "./Pages/Login/Login";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
     children: [
-        {
-            index: true, 
-            Component: Home,
-
-        },
-        {
-            path: 'about',
-            Component: About,
-        },
-        {
-            path: 'services',
-            Component: Services,
-        },
-        {
-            path: 'contact',
-            Component: Contact,
-        },{
-            path: 'register',
-            Component: Register,
-        }
-
-    ]
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "about",
+        Component: About,
+      },
+      {
+        path: "services",
+        Component: Services,
+      },
+      {
+        path: "contact",
+        Component: Contact,
+      },
+      {
+        path: "register",
+        Component: Register,
+      },
+      {
+        path: "login",
+        Component: Login,
+      },
+    ],
     // Component: Root,
     // loader: loadRootData,
   },

@@ -38,9 +38,9 @@ const maxlink = (
 );
 const button = (
   <>
-    <Link className="bg-[#D9A299] px-5 py-1.5 saira text-black rounded-md">
+    <button className="bg-[#D9A299] px-5 py-1.5 saira text-black rounded-md">
       Login
-    </Link>
+    </button>
   </>
 );
 
@@ -73,10 +73,9 @@ const Navbar = () => {
             {minlink}
           </ul>
         </div>
-        <Link to={'/'} className="normal-case text-xl font-bold">
-        <span></span>
+        <Link to={"/"} className="normal-case text-xl font-bold">
+          <span></span>
           Career Goal
-          
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex ">
@@ -84,7 +83,9 @@ const Navbar = () => {
           {maxlink}
         </ul>
       </div>
-      <div className="navbar-end">{button}</div>
+      <div className="navbar-end">
+        <Link to={"/login"}>{button}</Link>
+      </div>
     </div>
   );
 };
