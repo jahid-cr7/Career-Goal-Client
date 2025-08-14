@@ -1,6 +1,8 @@
-import React from "react";
+import React, { use } from "react";
 import { Link, NavLink } from "react-router";
 import "./Navbar.css";
+import { AuthContext } from "../ContextAPI/ContextAuth";
+import { toast, ToastContainer } from "react-toastify";
 
 const minlink = (
   <>
@@ -20,21 +22,19 @@ const minlink = (
 );
 const maxlink = (
   <>
-  <li>
-      <NavLink to={'/'}>Home</NavLink>
+    <li>
+      <NavLink to={"/"}>Home</NavLink>
     </li>
     <li>
-      <NavLink to={'/about'}>About</NavLink>
+      <NavLink to={"/about"}>About</NavLink>
     </li>
     <li>
-      <NavLink to={'/services'}>Services</NavLink>
+      <NavLink to={"/services"}>Services</NavLink>
     </li>
     <li>
-      <NavLink to={'/contact'}>Contact</NavLink>
+      <NavLink to={"/contact"}>Contact</NavLink>
     </li>
   </>
-    
-
 );
 const button = (
   <>
@@ -43,10 +43,47 @@ const button = (
     </button>
   </>
 );
+const signOutbutton = (
+  <>
+    <button className="bg-[#D9A299] px-5 py-1.5 saira text-black rounded-md">
+      SignOut
+    </button>
+  </>
+);
 
 const Navbar = () => {
+  const { users, signout } = use(AuthContext);
+
+  const handleSignOut = () => {
+    signout()
+      .then((result) => {
+        toast.success("User Sign Out Successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((error) => {
+        console.error("Sign out failed", error);
+        toast.error("Sign Out Failed", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
   return (
-    <div className="navbar bg-[#FAF7F3] shadow-sm text-black px-10">
+    <div className="navbar bg-[#9ECAD6] shadow-sm text-black px-10">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -84,8 +121,24 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to={"/login"}>{button}</Link>
+        {users ? (
+          <div onClick={handleSignOut}>{signOutbutton}</div>
+        ) : (
+          <Link to={"/login"}>{button}</Link>
+        )}
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

@@ -35,17 +35,28 @@ const Register = () => {
       return;
     }
     createUser(email, password)
-      .then((result) => {
-        toast.success("User Created Successfully", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+      .then(() => {
+        fetch("http://localhost:3000/job", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, photo, email }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            toast.success("User Created Successfully", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          });
         form.reset();
       })
       .catch((error) => {
@@ -55,7 +66,7 @@ const Register = () => {
 
   return (
     <div className="hero bg-base-200 min-h-screen">
-      <div className="hero-content flex-col lg:flex-row-reverse bg-gradient-to-l from-[#F0E4D3] to-[#DCC5B2] rounded-lg shadow-lg p-10 lg:p-16 p-10">
+      <div className="hero-content flex-col lg:flex-row-reverse bg-gradient-to-l from-[#F0E4D3] to-[#DCC5B2] rounded-lg shadow-lg lg:p-16 p-10">
         <div className="text-center lg:text-left lg:block hidden">
           <Lottie animationData={animationData} loop={true}></Lottie>
         </div>

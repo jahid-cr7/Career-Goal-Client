@@ -6,8 +6,13 @@ import { AuthContext } from "../../ContextAPI/ContextAuth";
 import { toast, ToastContainer } from "react-toastify";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router";
 
 const Login = () => {
+  const location = useLocation();
+  console.log(location);
+  const from = location?.state || "/";
+  const navigate = useNavigate();
   const { signInWithGoogle, signIn } = use(AuthContext);
   const [showpassword, setShowpassword] = useState(false);
   const handleGoogleLogin = () => {
@@ -24,6 +29,7 @@ const Login = () => {
           progress: undefined,
           theme: "light",
         });
+        navigate(from);
       })
       .catch((error) => {
         console.log(error);
@@ -42,16 +48,8 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         console.log(result.user);
-        toast.success("User Login Successfully", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("User Login Successfully");
+        navigate(from);
         form.reset();
       })
       .catch((error) => {
